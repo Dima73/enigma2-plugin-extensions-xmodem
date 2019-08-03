@@ -578,7 +578,7 @@ from autoRestartModemPoller import autoRestartModemPoller
 class ConnectInfo(Screen):
     skin = """
         <screen position="center,center" size="440,310" title="Connect statistics" >
-        <ePixmap pixmap="skin_default/buttons/red.png" position="10,10" size="140,40" alphatest="on" />
+        <ePixmap pixmap="buttons/red.png" position="10,10" size="140,40" alphatest="on" />
         <widget name="key_red" position="10,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
         <widget name="contimetxt" position="10,60" size="180,18" font="Regular;16" transparent="1" />
         <widget name="contimeval" position="200,60" size="235,18" font="Regular;16" />
@@ -592,11 +592,11 @@ class ConnectInfo(Screen):
         <widget name="gatewayval" position="200,140" size="235,18" font="Regular;16" transparent="1" />
         <widget name="dnstxt" position="10,160" size="180,18" font="Regular;16" transparent="1" />
         <widget name="dnsval" position="200,160" size="235,18" font="Regular;15" transparent="1" />
-        <ePixmap pixmap="skin_default/div-v.png" position="98,205" size="2,90" zPosition="1" />
-        <ePixmap pixmap="skin_default/div-v.png" position="268,205" size="2,90" zPosition="1" />
+        <ePixmap pixmap="div-v.png" position="98,205" size="2,90" zPosition="1" />
+        <ePixmap pixmap="div-v.png" position="268,205" size="2,90" zPosition="1" />
         <widget name="receivetxt" position="100,205" size="165,18" font="Regular;16" halign="center" transparent="1" />
         <widget name="transmittxt" position="270,205" size="165,18" font="Regular;16" halign="center" transparent="1" />
-        <ePixmap pixmap="skin_default/div-h.png" position="10,230" size="420,2" zPosition="1" />
+        <ePixmap pixmap="div-h.png" position="10,230" size="420,2" zPosition="1" />
         <widget name="bytestxt" position="10,240" size="85,18" font="Regular;16" transparent="1" />
         <widget name="bytesRXval" position="100,240" size="165,18" font="Regular;16" halign="center" transparent="1" />
         <widget name="bytesTXval" position="270,240" size="165,18" font="Regular;16" halign="center" transparent="1" />
@@ -878,20 +878,20 @@ class ModemSetup(ConfigListScreen, Screen):
     if not isHighResolution():
         skin = """
             <screen position="center,center" size="560,400" title="xModem" >
-            <ePixmap position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-            <ePixmap position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
-            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" /> 
+            <ePixmap position="0,0"   zPosition="2" size="140,40" pixmap="buttons/red.png" transparent="1" alphatest="on" />
+            <ePixmap position="140,0" zPosition="2" size="140,40" pixmap="buttons/green.png" transparent="1" alphatest="on" />
+            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="buttons/yellow.png" transparent="1" alphatest="on" /> 
+            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="buttons/blue.png" transparent="1" alphatest="on" /> 
             <widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
             <widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
             <widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="config" position="25,60" size="520,226" scrollbarMode="showOnDemand" />
-            <ePixmap pixmap="skin_default/div-h.png" position="35,293" size="455,2" zPosition="1" />
-            <ePixmap pixmap="skin_default/div-v.png" position="35,295" size="2,102" zPosition="1" />
-            <ePixmap pixmap="skin_default/div-v.png" position="488,295" size="2,102" zPosition="1" />
+            <ePixmap pixmap="div-h.png" position="35,293" size="455,2" zPosition="1" />
+            <ePixmap pixmap="div-v.png" position="35,295" size="2,102" zPosition="1" />
+            <ePixmap pixmap="div-v.png" position="488,295" size="2,102" zPosition="1" />
             <widget name="status" position="37,300" size="455,100" font="Regular;16" foregroundColor="#abcdef" />
-            <ePixmap pixmap="skin_default/div-h.png" position="35,398" size="455,2" zPosition="1" />
+            <ePixmap pixmap="div-h.png" position="35,398" size="455,2" zPosition="1" />
             <widget source="TvIcon" render="Pixmap" pixmap="%s" position="0,295" zPosition="10" size="35,25" transparent="1" alphatest="on" >
                 <convert type="ConditionalShowHide" />
             </widget>
@@ -916,11 +916,11 @@ class ModemSetup(ConfigListScreen, Screen):
             <ePixmap position="600,43" zPosition="1" size="200,2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/xModem/images/blue.png" alphatest="blend" />
             <widget name="key_blue" position="600,0" zPosition="2" size="200,42" font="Regular; 19" halign="center" valign="center" backgroundColor="background" foregroundColor="white" transparent="1" />
             <widget name="config" position="50,60" size="700,226" scrollbarMode="showOnDemand" />
-            <ePixmap pixmap="skin_default/div-h.png" position="50,293" size="655,2" zPosition="1" />
-            <ePixmap pixmap="skin_default/div-v.png" position="50,295" size="2,95" zPosition="1" />
-            <ePixmap pixmap="skin_default/div-v.png" position="703,295" size="2,95" zPosition="1" />
+            <ePixmap pixmap="div-h.png" position="50,293" size="655,2" zPosition="1" />
+            <ePixmap pixmap="div-v.png" position="50,295" size="2,95" zPosition="1" />
+            <ePixmap pixmap="div-v.png" position="703,295" size="2,95" zPosition="1" />
             <widget name="status" position="53,300" size="650,97" font="Regular;17" foregroundColor="#abcdef" />
-            <ePixmap pixmap="skin_default/div-h.png" position="50,390" size="655,2" zPosition="1" />
+            <ePixmap pixmap="div-h.png" position="50,390" size="655,2" zPosition="1" />
             <widget source="TvIcon" render="Pixmap" pixmap="%s" position="0,295" zPosition="10" size="35,25" transparent="1" alphatest="on" >
                 <convert type="ConditionalShowHide" />
             </widget>

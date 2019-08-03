@@ -25,13 +25,13 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 	skin = """
 		<screen position="center,center" size="510,320" title="Request USSD" >
 			<widget name="config" position="5,5" size="500,190" />
-			<ePixmap pixmap="skin_default/buttons/green.png" position="180,200" zPosition="0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/red.png" position="5,200" zPosition="0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="skin_default/buttons/blue.png" position="360,200" zPosition="0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/green.png" position="180,200" zPosition="0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/red.png" position="5,200" zPosition="0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/blue.png" position="360,200" zPosition="0" size="140,40" alphatest="on" />
 			<widget name="save" position="360,200" size="140,40" valign="center" halign="center" zPosition="1" font="Regular;17" transparent="1" backgroundColor="blue" />
 			<widget name="ok" position="180,200" size="140,40" valign="center" halign="center" zPosition="1" font="Regular;17" transparent="1" backgroundColor="green" />
 			<widget name="cancel" position="5,200" size="140,40" valign="center" halign="center" zPosition="1" font="Regular;17" transparent="1" backgroundColor="red" />
-			<ePixmap pixmap="skin_default/div-v.png" position="0,250" size="510,2" zPosition="1" />
+			<ePixmap pixmap="div-v.png" position="0,250" size="510,2" zPosition="1" />
 			<widget name="status" position="5,257" size="500,57" font="Regular;17" foregroundColor="#abcdef" />
 		</screen>"""
 
