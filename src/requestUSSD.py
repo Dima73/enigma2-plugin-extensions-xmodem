@@ -77,7 +77,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		self.prev_values = getPrevValues(self.ussd)
 		self.cfg_apn = getConfigListEntry(_("APN"), self.ussd.apn)
 		self.cfg_number = getConfigListEntry(_("Number"), self.ussd.number)
-		self.cfg_port  = getConfigListEntry(_("Port"), self.ussd.port)
+		self.cfg_port = getConfigListEntry(_("Port"), self.ussd.port)
 		self.cfg_encoding = getConfigListEntry(_("Encoding request"), self.ussd.encoding)
 
 
@@ -124,7 +124,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 			for l in self.p:
 				print l
 				if l.startswith('+CUSD'):
-					answer =  base64.b16decode(l[10:l.rfind('"')]).decode('utf-16-be')
+					answer = base64.b16decode(l[10:l.rfind('"')]).decode('utf-16-be')
 					print answer
 					self['status'].setText(answer)
 					break
