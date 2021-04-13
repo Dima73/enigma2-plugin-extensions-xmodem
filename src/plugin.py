@@ -146,8 +146,8 @@ def setAltDNS():
     if not fileExists('/etc/ppp/resolv.conf.xmodem'):
         return
     system("grep -v '^nameserver' /etc/ppp/resolv.conf.xmodem >/etc/resolv.conf")
-    dns1 = '.'.join([ '%d' % d for d in config.plugins.xModem.dns1.value ])
-    dns2 = '.'.join([ '%d' % d for d in config.plugins.xModem.dns2.value ])
+    dns1 = '.'.join(['%d' % d for d in config.plugins.xModem.dns1.value])
+    dns2 = '.'.join(['%d' % d for d in config.plugins.xModem.dns2.value])
     dns = 'nameserver ' + dns1 + '\nnameserver ' + dns2 + '\n'
     f = open('/etc/resolv.conf', 'r+')
     if f:
@@ -470,7 +470,7 @@ config.plugins.xModem.restart_softcam = ConfigYesNo(default=False)
 config.plugins.xModem.show_message = ConfigYesNo(default=False)
 config.plugins.xModem.restart_softcam_preview = ConfigNothing()
 
-config.plugins.xModem.autorestart_modem = ConfigSelection(default="0", choices=[("0", _("disabled")) , ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")),("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
+config.plugins.xModem.autorestart_modem = ConfigSelection(default="0", choices=[("0", _("disabled")), ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")),("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
 choices_list =[]
 huawei_list = [("AT^U2DIAG=0", _("Huawei AT^U2DIAG=0 (only modem mode)")),("AT^U2DIAG=1", _("Huawei AT^U2DIAG=1 (modem and CD-Rom mode)")),("AT^U2DIAG=255", _("Huawei AT^U2DIAG=255 (Modem+CD-Rom+Card-Reader Modem+ Factory Defaults)")), ("AT^U2DIAG=256", _("Huawei AT^U2DIAG=256 (Modem+Card-Reader Mode)")), ("AT^U2DIAG=257", _("Huawei AT^U2DIAG=257 (Disable Application Port)")), ("AT^U2DIAG=276", _("Huawei AT^U2DIAG=276 (Reset to factory Defaults)")), ("AT^U2DIAG=119", _("Huawei AT^U2DIAG=119 (return to HiLink mode)")), ("AT^SYSCFG=13,1,3fffffff,0,0", _("Huawei AT^SYSCFG=13,1,3fffffff,0,0 (only 2G mode)")), ("AT^SYSCFG=2,1,3fffffff,0,0", _("Huawei AT^SYSCFG=2,1,3fffffff,0,0 (preference 2G mode)")), ("AT^SYSCFG=14,2,3fffffff,0,1 ", _("Huawei  AT^SYSCFG=14,2,3fffffff,0,1 (only 3G mode)")),("AT^SYSCFG=2,2,3fffffff,0,1", _("Huawei AT^SYSCFG=2,2,3fffffff,0,1 (preference 3G mode)")), ("AT^SYSCFG=2,2,3fffff ff,0,2", _("Huawei AT^SYSCFG=2,2,3fffff ff,0,2 (enable mode 2G and 3G)")), ("AT^SYSCFG=13,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=13,1,3FFFFFFF,2,4 (only mode GPRS/EDGE)")), ("AT^SYSCFG=14,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=14,2,3FFFFFFF,2,4 (only mode 3G/WCDMA)")), ("AT^SYSCFG=2,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,1,3FFFFFFF,2,4 (preference mode GPRS/EDGE)")), ("AT^SYSCFG=2,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,2,3FFFFFFF,2,4 (preference mode 3G/WCDMA)"))]
 huawei_list_ext = [("AT^HSDPA=1", _("Huawei AT^HSDPA=1 (modem mode HSDPA on)")), ("AT^HSDPA=0", _("Huawei AT^HSDPA=0 (modem mode HSDPA off)")), ("AT^HSUPA=1", _("Huawei AT^HSUPA=1 (modem mode HSUPA on)")), ("AT^HSUPA=0", _("Huawei AT^HSUPA=0 (modem mode HSUPA off)")), ("AT^HSPA=0", _("Huawei AT^HSPA=0 ( mode WCDMA)")), ("AT^HSPA=1", _("Huawei AT^HSPA=1 ( mode HSDPA)")), ("AT^HSPA=2", _("Huawei AT^HSPA=2 (mode HSPA)")), ("AT^HSPA=3", _("Huawei AT^HSPA=3 (mode HSPA+)"))]
@@ -1271,7 +1271,7 @@ class ModemSetup(ConfigListScreen, Screen):
 				elif choice[1] == "pppstats":
 					self.session.open(dataConsole,_("Run utility 'pppstats'"),["pppstats -w1"])
 				elif choice[1] == "about":
-					self.session.open( MessageBox, _("Plugin version: %s\n\n") % plugin_version + _("Original developer and author code (2010):\nvlamo\nFurther development (2012-2015):\nDimitrij\n"), MessageBox.TYPE_INFO)
+					self.session.open(MessageBox, _("Plugin version: %s\n\n") % plugin_version + _("Original developer and author code (2010):\nvlamo\nFurther development (2012-2015):\nDimitrij\n"), MessageBox.TYPE_INFO)
 		dlg = self.session.openWithCallback(extraAction, ChoiceBox, title=text, list=menu)
 		dlg.setTitle(_("Extra menu"))
 
@@ -1646,4 +1646,4 @@ def Plugins(**kwargs):
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon='xmodem.png', fnc=main),
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MENU, fnc=menu)]
 	else:
-		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main),PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu) ]
+		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main),PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu)]
