@@ -29,4 +29,3 @@ config.plugins.xModem.nolocale = ConfigYesNo(default=False)
 if not config.plugins.xModem.nolocale.value:
     localeInit()
     language.addCallback(localeInit)
-

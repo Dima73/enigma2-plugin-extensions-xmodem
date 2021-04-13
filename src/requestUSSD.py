@@ -44,7 +44,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		self["cancel"] = Button(_("Cancel"))
 		self["save"] = Button(_("Run/OK"))
 		self['status'] = Label('')
-		self["actions"] = ActionMap(["SetupActions", "ColorActions"], 
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
 			"ok": self.keyOk,
 			"save": self.keyGreen,
@@ -104,7 +104,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		setPrevValues(self.ussd, self.prev_values)
 		self.keyGreen()
 
-	def keyGreen(self): 
+	def keyGreen(self):
 		self.ussd.save()
 		self.close()
 

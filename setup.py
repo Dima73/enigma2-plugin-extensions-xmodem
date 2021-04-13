@@ -12,4 +12,3 @@ setup(name='enigma2-plugin-extensions-xmodem',
 		description='plugin to connect to internet via any modems',
 		cmdclass=setup_translate.cmdclass,
 	)
-

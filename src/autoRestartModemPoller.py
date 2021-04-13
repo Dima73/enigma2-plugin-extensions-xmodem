@@ -64,4 +64,3 @@ class autoRestartModemPoller:
 					Notifications.AddPopup(text=_("Failed start modem!\nPlease run modem manually..."), type=MessageBox.TYPE_INFO, timeout=10)
 				print "[autoRestartModemPoller] failed start modem"
 				#StopConnect()
-

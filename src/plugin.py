@@ -878,7 +878,7 @@ class dataConsole(myConsole):
     def __init__(self, session, title="execute...", cmdlist=None, finishedCallback=None, closeOnSuccess=False):
 		myConsole.__init__(self, session, title, cmdlist, finishedCallback, closeOnSuccess)
 		self.skinName = "Console"
-		self["BackupActions"] = ActionMap(["InfobarMenuActions"], 
+		self["BackupActions"] = ActionMap(["InfobarMenuActions"],
 		{
 			"mainMenu": self.stopRun,
 		}, -2)
@@ -891,7 +891,7 @@ class dataConsole(myConsole):
 		self.close()
 		self.container.appClosed.remove(self.runFinished)
 		self.container.dataAvail.remove(self.dataAvail)
- 
+
     def stopRun(self):
 		if not self.stop_run:
 			self.container.sendCtrlC()
@@ -904,10 +904,10 @@ class ModemSetup(ConfigListScreen, Screen):
             <screen position="center,center" size="560,400" title="xModem" >
             <ePixmap position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
             <ePixmap position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
-            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" /> 
-            <widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
-            <widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
+            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
+            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+            <widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+            <widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="config" position="25,60" size="520,226" scrollbarMode="showOnDemand" />
