@@ -2,6 +2,7 @@
 run_autostart = None
 plugin_version = "1.4"
 
+
 def getDefaultGateway():
     if not fileExists('/proc/net/route'):
         return None
@@ -12,6 +13,7 @@ def getDefaultGateway():
             if tokens[1] == '00000000':
                 f.close()
                 return int(tokens[2], 16)
+
 
 def setOptionFile(file, txt):
     system('echo "" > %s' % file)
@@ -27,6 +29,7 @@ def setOptionFile(file, txt):
         f.write(txt)
         f.close()
 
+
 def setChatFile(file, txt):
     system('echo "" > %s' % file)
     system('chmod 755 %s' % file)
@@ -41,6 +44,7 @@ def setChatFile(file, txt):
         f.write(txt)
         f.close()
 
+
 def getUptime():
     if not fileExists('/proc/uptime'):
         return ''
@@ -51,6 +55,7 @@ def getUptime():
             if tokens[0]:
                 f.close()
                 return int(float(tokens[0]))
+
 
 def StartConnect(autorun=False):
     global dialstate
@@ -93,6 +98,7 @@ def StartConnect(autorun=False):
         system('echo "`date` : pppd return = %d" >> /tmp/autorun.log' % ret)
     return ret
 
+
 def StopConnect(autorun=False):
     global connected
     global dialstate
@@ -117,8 +123,10 @@ def StopConnect(autorun=False):
     dialstate = NONE
     starttime = None
 
+
 def isHighResolution():
     return getDesktop(0).size().width() >= 1280 and getDesktop(0).size().height() >= 720
+
 
 from Screens.Screen import Screen
 from __init__ import _
@@ -142,6 +150,7 @@ from re import compile as re_compile, search as re_search
 from Screens.Console import Console as myConsole
 import gettext
 
+
 def setAltDNS():
     if not fileExists('/etc/ppp/resolv.conf.xmodem'):
         return
@@ -155,9 +164,11 @@ def setAltDNS():
         f.write(dns)
         f.close()
 
+
 def restoreDNS():
     if fileExists('/etc/ppp/resolv.conf.xmodem'):
         system('mv /etc/ppp/resolv.conf.xmodem /etc/resolv.conf')
+
 
 def setOptions():
     if config.plugins.xModem.altdns.value:
@@ -234,6 +245,7 @@ def setOptions():
         options += 'disconnect /etc/ppp/disconnect.chat.xmodem\n'
     return options
 
+
 def setChats(init=True):
     if init:
         chatstr = '#!/bin/sh\n\nif [ $# -lt 1 ]; then\n\techo "$0: no phone number given." >&2\n\texit -1\nfi\n\nPHONENUM=$1\n\nchat -v -e \\\n'
@@ -274,6 +286,7 @@ def setChats(init=True):
     else:
         chatstr += '\\d\\d+\\p+\\p+\\c" "" "\\d\\dATH"\n'
     return chatstr
+
 
 def doConnect():
     global gateway
@@ -322,6 +335,7 @@ def doConnect():
         system('rm -f /etc/ppp/resolv.conf.xmodem')
         system('cp /etc/resolv.conf /etc/ppp/resolv.conf.xmodem')
 
+
 def loadModemModules():
     vendor = config.plugins.xModem.gprs.vendid.value
     product = config.plugins.xModem.gprs.prodid.value
@@ -342,6 +356,7 @@ def loadModemModules():
     if vendor and product:
         modules[0] += ' vendor=0x%s product=0x%s' % (vendor, product)
     system('modprobe %s' % modules[0])
+
 
 def pppdClosed(ret):
     global logfd
@@ -368,6 +383,7 @@ def pppdClosed(ret):
         logfd.close()
         logfd = -1
 
+
 def curtime2str(format='%Y/%m/%d %H:%M:%S', msec=True):
     curtime = getTime()
     ms = ''
@@ -375,7 +391,9 @@ def curtime2str(format='%Y/%m/%d %H:%M:%S', msec=True):
         ms = '.%03d' % ((curtime - int(curtime)) * 1000)
     return strftime(format, localtime(curtime)) + ms
 
+
 waitCR = False
+
 
 def writeLog(text):
     global waitCR
@@ -416,6 +434,7 @@ def writeLog(text):
             len(logstr) > 0 and logfd.write(logstr)
             logfd.flush()
             waitCR = logstr[len(logstr) - 1] != '\n'
+
 
 def dataAvail(text):
     global dialstate
@@ -576,6 +595,7 @@ config.plugins.xModem.peer.useums = ConfigYesNo(default=False)
 config.plugins.xModem.peer.umsparam = ConfigText('', fixed_size=False)
 
 from autoRestartModemPoller import autoRestartModemPoller
+
 
 class ConnectInfo(Screen):
     skin = """
@@ -853,6 +873,7 @@ class LogConsole(Screen):
         if self.scroll:
             self['text'].lastPage()
 
+
 class dataConsole(myConsole):
     def __init__(self, session, title="execute...", cmdlist=None, finishedCallback=None, closeOnSuccess=False):
 		myConsole.__init__(self, session, title, cmdlist, finishedCallback, closeOnSuccess)
@@ -875,6 +896,7 @@ class dataConsole(myConsole):
 		if not self.stop_run:
 			self.container.sendCtrlC()
 			self.stop_run = True
+
 
 class ModemSetup(ConfigListScreen, Screen):
     if not isHighResolution():
@@ -1251,6 +1273,7 @@ class ModemSetup(ConfigListScreen, Screen):
 			if fileExists('/usr/sbin/pppstats')or fileExists('/usr/bin/pppstats'):
 				menu.append((_("Run utility 'pppstats'"), "pppstats"))
 		menu.append((_("About plugin"), "about"))
+
 		def extraAction(choice):
 			if choice:
 				if choice[1] == "apn":
@@ -1397,6 +1420,7 @@ class ModemSetup(ConfigListScreen, Screen):
 		if self.green_function == CONNECT:
 			text = _("Set AT-command as:")
 			menu = [(_("Init string"), "init"), (_("Deinit string"), "deinit")]
+
 			def extraAction(choice):
 				if choice:
 					if choice[1] == "init":
@@ -1623,6 +1647,7 @@ class ModemSetup(ConfigListScreen, Screen):
         self['config'].instance.setSelectionEnable(focus_enabled)
         self['ListActions'].setEnabled(not focus_enabled)
 
+
 def autostart(reason, **kwargs):
 	if reason == 0:
 		global run_autostart
@@ -1631,13 +1656,16 @@ def autostart(reason, **kwargs):
 	elif reason == 1:
 		StopConnect(True)
 
+
 def main(session, **kwargs):
 	session.open(ModemSetup)
+
 
 def menu(menuid, **kwargs):
 	if menuid == "mainmenu" and config.plugins.xModem.mainmenu.value:
 		return [(_("xModem"), main, "x_modem", 45)]
 	return []
+
 
 def Plugins(**kwargs):
 	if config.plugins.xModem.extmenu.value:

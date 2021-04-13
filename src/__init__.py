@@ -8,6 +8,7 @@ __version__ = '1.4'
 PluginLangDomain = 'xModem'
 PluginLangPath = 'Extensions/xModem/locale'
 
+
 def localeInit():
     lang = language.getLanguage()[:2]
     os.environ['LANGUAGE'] = lang

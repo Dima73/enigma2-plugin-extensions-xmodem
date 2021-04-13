@@ -21,6 +21,7 @@ config.plugins.xModem.ussd.apn = ConfigText('internet', fixed_size=False)
 config.plugins.xModem.ussd.port = ConfigText('/dev/ttyUSB0', fixed_size=False)
 config.plugins.xModem.ussd.port.setUseableChars(u'0123456789abcdemstuvyABCMSTU/')
 
+
 class requestUSSDsetup(Screen, ConfigListScreen):
 	skin = """
 		<screen position="center,center" size="510,320" title="Request USSD" >
@@ -79,7 +80,6 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		self.cfg_number = getConfigListEntry(_("Number"), self.ussd.number)
 		self.cfg_port = getConfigListEntry(_("Port"), self.ussd.port)
 		self.cfg_encoding = getConfigListEntry(_("Encoding request"), self.ussd.encoding)
-
 
 	def createSetup(self):
 		list = [self.cfg_apn]

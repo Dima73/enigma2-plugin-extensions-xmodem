@@ -7,8 +7,10 @@ import Screens.InfoBar
 import Screens.Standby
 from Tools import Notifications
 
+
 class autoRestartModemPoller:
 	"""Automatically restarting xModem"""
+
 	def __init__(self):
 		self.timer = eTimer()
 		self.wait_timer = eTimer()
