@@ -470,12 +470,12 @@ config.plugins.xModem.restart_softcam = ConfigYesNo(default=False)
 config.plugins.xModem.show_message = ConfigYesNo(default=False)
 config.plugins.xModem.restart_softcam_preview = ConfigNothing()
 
-config.plugins.xModem.autorestart_modem = ConfigSelection(default="0", choices=[("0", _("disabled")), ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")),("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
+config.plugins.xModem.autorestart_modem = ConfigSelection(default="0", choices=[("0", _("disabled")), ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")), ("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
 choices_list = []
-huawei_list = [("AT^U2DIAG=0", _("Huawei AT^U2DIAG=0 (only modem mode)")),("AT^U2DIAG=1", _("Huawei AT^U2DIAG=1 (modem and CD-Rom mode)")),("AT^U2DIAG=255", _("Huawei AT^U2DIAG=255 (Modem+CD-Rom+Card-Reader Modem+ Factory Defaults)")), ("AT^U2DIAG=256", _("Huawei AT^U2DIAG=256 (Modem+Card-Reader Mode)")), ("AT^U2DIAG=257", _("Huawei AT^U2DIAG=257 (Disable Application Port)")), ("AT^U2DIAG=276", _("Huawei AT^U2DIAG=276 (Reset to factory Defaults)")), ("AT^U2DIAG=119", _("Huawei AT^U2DIAG=119 (return to HiLink mode)")), ("AT^SYSCFG=13,1,3fffffff,0,0", _("Huawei AT^SYSCFG=13,1,3fffffff,0,0 (only 2G mode)")), ("AT^SYSCFG=2,1,3fffffff,0,0", _("Huawei AT^SYSCFG=2,1,3fffffff,0,0 (preference 2G mode)")), ("AT^SYSCFG=14,2,3fffffff,0,1 ", _("Huawei  AT^SYSCFG=14,2,3fffffff,0,1 (only 3G mode)")),("AT^SYSCFG=2,2,3fffffff,0,1", _("Huawei AT^SYSCFG=2,2,3fffffff,0,1 (preference 3G mode)")), ("AT^SYSCFG=2,2,3fffff ff,0,2", _("Huawei AT^SYSCFG=2,2,3fffff ff,0,2 (enable mode 2G and 3G)")), ("AT^SYSCFG=13,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=13,1,3FFFFFFF,2,4 (only mode GPRS/EDGE)")), ("AT^SYSCFG=14,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=14,2,3FFFFFFF,2,4 (only mode 3G/WCDMA)")), ("AT^SYSCFG=2,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,1,3FFFFFFF,2,4 (preference mode GPRS/EDGE)")), ("AT^SYSCFG=2,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,2,3FFFFFFF,2,4 (preference mode 3G/WCDMA)"))]
+huawei_list = [("AT^U2DIAG=0", _("Huawei AT^U2DIAG=0 (only modem mode)")), ("AT^U2DIAG=1", _("Huawei AT^U2DIAG=1 (modem and CD-Rom mode)")), ("AT^U2DIAG=255", _("Huawei AT^U2DIAG=255 (Modem+CD-Rom+Card-Reader Modem+ Factory Defaults)")), ("AT^U2DIAG=256", _("Huawei AT^U2DIAG=256 (Modem+Card-Reader Mode)")), ("AT^U2DIAG=257", _("Huawei AT^U2DIAG=257 (Disable Application Port)")), ("AT^U2DIAG=276", _("Huawei AT^U2DIAG=276 (Reset to factory Defaults)")), ("AT^U2DIAG=119", _("Huawei AT^U2DIAG=119 (return to HiLink mode)")), ("AT^SYSCFG=13,1,3fffffff,0,0", _("Huawei AT^SYSCFG=13,1,3fffffff,0,0 (only 2G mode)")), ("AT^SYSCFG=2,1,3fffffff,0,0", _("Huawei AT^SYSCFG=2,1,3fffffff,0,0 (preference 2G mode)")), ("AT^SYSCFG=14,2,3fffffff,0,1 ", _("Huawei  AT^SYSCFG=14,2,3fffffff,0,1 (only 3G mode)")), ("AT^SYSCFG=2,2,3fffffff,0,1", _("Huawei AT^SYSCFG=2,2,3fffffff,0,1 (preference 3G mode)")), ("AT^SYSCFG=2,2,3fffff ff,0,2", _("Huawei AT^SYSCFG=2,2,3fffff ff,0,2 (enable mode 2G and 3G)")), ("AT^SYSCFG=13,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=13,1,3FFFFFFF,2,4 (only mode GPRS/EDGE)")), ("AT^SYSCFG=14,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=14,2,3FFFFFFF,2,4 (only mode 3G/WCDMA)")), ("AT^SYSCFG=2,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,1,3FFFFFFF,2,4 (preference mode GPRS/EDGE)")), ("AT^SYSCFG=2,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,2,3FFFFFFF,2,4 (preference mode 3G/WCDMA)"))]
 huawei_list_ext = [("AT^HSDPA=1", _("Huawei AT^HSDPA=1 (modem mode HSDPA on)")), ("AT^HSDPA=0", _("Huawei AT^HSDPA=0 (modem mode HSDPA off)")), ("AT^HSUPA=1", _("Huawei AT^HSUPA=1 (modem mode HSUPA on)")), ("AT^HSUPA=0", _("Huawei AT^HSUPA=0 (modem mode HSUPA off)")), ("AT^HSPA=0", _("Huawei AT^HSPA=0 ( mode WCDMA)")), ("AT^HSPA=1", _("Huawei AT^HSPA=1 ( mode HSDPA)")), ("AT^HSPA=2", _("Huawei AT^HSPA=2 (mode HSPA)")), ("AT^HSPA=3", _("Huawei AT^HSPA=3 (mode HSPA+)"))]
 choices_list += huawei_list + huawei_list_ext
-zte_list = [("AT%USBMODEM=0", _("ZTE AT%USBMODEM=0 (only modem mode)")),("AT%USBMODEM=1", _("ZTE AT%USBMODEM=1 (modem and CD-Rom mode)")),("AT+ZSNT=0,0,0", _("ZTE AT+ZSNT=0,0,0 (Network/auto mode)")), ("AT+ZSNT=0,0,1", _("ZTE AT+ZSNT=0,0,1 (auto GSM+WCDMA/preference GSM)")), ("AT+ZSNT=0,0,2", _("ZTE AT+ZSNT=0,0,2 (auto GSM+WCDMA/preference WCDMA)")), ("AT+ZSNT=1,0,0", _("ZTE AT+ZSNT=1,0,0 (auto/only GSM)")), ("AT+ZSNT=2,0,0", _("ZTE AT+ZSNT=2,0,0 (auto/only WCDMA)")), ("AT+ZSNT=0,1,0 ", _("ZTE AT+ZSNT=0,1,0 (manual/GSM+WCDMA)")), ("AT+ZSNT=1,1,0", _("ZTE AT+ZSNT=1,1,0 (manual/only GSM)")), ("AT+ZSNT=2,1,0", _("ZTE AT+ZSNT=2,1,0  (manual/only WCDMA)"))]
+zte_list = [("AT%USBMODEM=0", _("ZTE AT%USBMODEM=0 (only modem mode)")), ("AT%USBMODEM=1", _("ZTE AT%USBMODEM=1 (modem and CD-Rom mode)")), ("AT+ZSNT=0,0,0", _("ZTE AT+ZSNT=0,0,0 (Network/auto mode)")), ("AT+ZSNT=0,0,1", _("ZTE AT+ZSNT=0,0,1 (auto GSM+WCDMA/preference GSM)")), ("AT+ZSNT=0,0,2", _("ZTE AT+ZSNT=0,0,2 (auto GSM+WCDMA/preference WCDMA)")), ("AT+ZSNT=1,0,0", _("ZTE AT+ZSNT=1,0,0 (auto/only GSM)")), ("AT+ZSNT=2,0,0", _("ZTE AT+ZSNT=2,0,0 (auto/only WCDMA)")), ("AT+ZSNT=0,1,0 ", _("ZTE AT+ZSNT=0,1,0 (manual/GSM+WCDMA)")), ("AT+ZSNT=1,1,0", _("ZTE AT+ZSNT=1,1,0 (manual/only GSM)")), ("AT+ZSNT=2,1,0", _("ZTE AT+ZSNT=2,1,0  (manual/only WCDMA)"))]
 choices_list += zte_list
 config.plugins.xModem.examples_commands = NoSave(ConfigSelection(choices=choices_list))
 config.plugins.xModem.standard = ConfigSelection([('0', _('internal modem')),
@@ -1219,17 +1219,17 @@ class ModemSetup(ConfigListScreen, Screen):
 			stop = False
 			if cur[1] == config.plugins.xModem.imod.number:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','P','T','W','@'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'P', 'T', 'W', '@'):
 						stop = True
 						break
 			elif cur[1] == config.plugins.xModem.imod.port or cur[1] == config.plugins.xModem.gprs.port or cur[1] == config.plugins.xModem.cdma.port:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','m','s','t','u','v','y','A','B','C','M','S','T','U','/'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'm', 's', 't', 'u', 'v', 'y', 'A', 'B', 'C', 'M', 'S', 'T', 'U', '/'):
 						stop = True
 						break
 			elif cur[1] == config.plugins.xModem.gprs.vendid or cur[1] == config.plugins.xModem.gprs.prodid or cur[1] == config.plugins.xModem.cdma.vendid or cur[1] == config.plugins.xModem.cdma.prodid or cur[1] == config.plugins.xModem.peer.vendid or cur[1] == config.plugins.xModem.peer.prodid:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'):
 						stop = True
 						break
 			if not stop:
@@ -1254,22 +1254,22 @@ class ModemSetup(ConfigListScreen, Screen):
 		def extraAction(choice):
 			if choice:
 				if choice[1] == "apn":
-					self.session.open(myConsole,_("Show APN list"),["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/apnlist"])
+					self.session.open(myConsole, _("Show APN list"), ["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/apnlist"])
 				elif choice[1] == "lsusb":
-					self.session.open(myConsole,_("Run command 'lsusb'"),["lsusb"])
+					self.session.open(myConsole, _("Run command 'lsusb'"), ["lsusb"])
 				elif choice[1] == "dmesg":
-					self.session.open(myConsole,_("Run command 'dmesg'"),["dmesg"])
+					self.session.open(myConsole, _("Run command 'dmesg'"), ["dmesg"])
 				elif choice[1] == "usb_modeswitch":
-					self.session.open(myConsole,_("usb_modeswitch --help"),["usb_modeswitch --help && cat /etc/list_modem.txt"])
+					self.session.open(myConsole, _("usb_modeswitch --help"), ["usb_modeswitch --help && cat /etc/list_modem.txt"])
 				elif choice[1] == "drivers":
 					self.install()
 				elif choice[1] == "ussd":
 					from requestUSSD import requestUSSDsetup
 					self.session.open(requestUSSDsetup)
 				elif choice[1] == "picocom":
-					self.session.open(dataConsole,_("Instruction for utility 'picocom'"),["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/picocomlist && picocom -h"])
+					self.session.open(dataConsole, _("Instruction for utility 'picocom'"), ["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/picocomlist && picocom -h"])
 				elif choice[1] == "pppstats":
-					self.session.open(dataConsole,_("Run utility 'pppstats'"),["pppstats -w1"])
+					self.session.open(dataConsole, _("Run utility 'pppstats'"), ["pppstats -w1"])
 				elif choice[1] == "about":
 					self.session.open(MessageBox, _("Plugin version: %s\n\n") % plugin_version + _("Original developer and author code (2010):\nvlamo\nFurther development (2012-2015):\nDimitrij\n"), MessageBox.TYPE_INFO)
 		dlg = self.session.openWithCallback(extraAction, ChoiceBox, title=text, list=menu)
@@ -1646,4 +1646,4 @@ def Plugins(**kwargs):
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon='xmodem.png', fnc=main),
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MENU, fnc=menu)]
 	else:
-		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main),PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu)]
+		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu)]
