@@ -3,7 +3,8 @@ run_autostart = None
 plugin_version = "1.4"
 
 def getDefaultGateway():
-    if not fileExists('/proc/net/route'): return None
+    if not fileExists('/proc/net/route'):
+        return None
     f = open('/proc/net/route', 'r')
     if f:
         for line in f.readlines():
@@ -41,7 +42,8 @@ def setChatFile(file, txt):
         f.close()
 
 def getUptime():
-    if not fileExists('/proc/uptime'): return ''
+    if not fileExists('/proc/uptime'):
+        return ''
     f = open('/proc/uptime', 'r')
     if f:
         for line in f.readlines():
@@ -1211,7 +1213,8 @@ class ModemSetup(ConfigListScreen, Screen):
 
     def VirtualKeyBoardCallback(self, callback = None):
 		cur = self["config"].getCurrent()
-		if cur is None: return
+		if cur is None:
+		    return
 		if callback is not None and len(callback):
 			stop = False
 			if cur[1] == config.plugins.xModem.imod.number:
