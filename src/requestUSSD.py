@@ -21,6 +21,7 @@ config.plugins.xModem.ussd.apn = ConfigText('internet', fixed_size=False)
 config.plugins.xModem.ussd.port = ConfigText('/dev/ttyUSB0', fixed_size=False)
 config.plugins.xModem.ussd.port.setUseableChars(u'0123456789abcdemstuvyABCMSTU/')
 
+
 class requestUSSDsetup(Screen, ConfigListScreen):
 	skin = """
 		<screen position="center,center" size="510,320" title="Request USSD" >
@@ -43,7 +44,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		self["cancel"] = Button(_("Cancel"))
 		self["save"] = Button(_("Run/OK"))
 		self['status'] = Label('')
-		self["actions"] = ActionMap(["SetupActions", "ColorActions"], 
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
 			"ok": self.keyOk,
 			"save": self.keyGreen,
@@ -65,8 +66,8 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 
 	def initConfig(self):
 		def getPrevValues(section):
-			res = { }
-			for (key,val) in section.content.items.items():
+			res = {}
+			for (key, val) in section.content.items.items():
 				if isinstance(val, ConfigSubsection):
 					res[key] = getPrevValues(val)
 				else:
@@ -77,9 +78,8 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		self.prev_values = getPrevValues(self.ussd)
 		self.cfg_apn = getConfigListEntry(_("APN"), self.ussd.apn)
 		self.cfg_number = getConfigListEntry(_("Number"), self.ussd.number)
-		self.cfg_port  = getConfigListEntry(_("Port"), self.ussd.port)
+		self.cfg_port = getConfigListEntry(_("Port"), self.ussd.port)
 		self.cfg_encoding = getConfigListEntry(_("Encoding request"), self.ussd.encoding)
-
 
 	def createSetup(self):
 		list = [self.cfg_apn]
@@ -94,7 +94,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 
 	def keyRed(self):
 		def setPrevValues(section, values):
-			for (key,val) in section.content.items.items():
+			for (key, val) in section.content.items.items():
 				value = values.get(key, None)
 				if value is not None:
 					if isinstance(val, ConfigSubsection):
@@ -104,7 +104,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 		setPrevValues(self.ussd, self.prev_values)
 		self.keyGreen()
 
-	def keyGreen(self): 
+	def keyGreen(self):
 		self.ussd.save()
 		self.close()
 
@@ -124,7 +124,7 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 			for l in self.p:
 				print l
 				if l.startswith('+CUSD'):
-					answer =  base64.b16decode(l[10:l.rfind('"')]).decode('utf-16-be')
+					answer = base64.b16decode(l[10:l.rfind('"')]).decode('utf-16-be')
 					print answer
 					self['status'].setText(answer)
 					break

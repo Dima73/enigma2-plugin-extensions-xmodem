@@ -2,8 +2,10 @@
 run_autostart = None
 plugin_version = "1.4"
 
+
 def getDefaultGateway():
-    if not fileExists('/proc/net/route'): return None
+    if not fileExists('/proc/net/route'):
+        return None
     f = open('/proc/net/route', 'r')
     if f:
         for line in f.readlines():
@@ -11,6 +13,7 @@ def getDefaultGateway():
             if tokens[1] == '00000000':
                 f.close()
                 return int(tokens[2], 16)
+
 
 def setOptionFile(file, txt):
     system('echo "" > %s' % file)
@@ -26,6 +29,7 @@ def setOptionFile(file, txt):
         f.write(txt)
         f.close()
 
+
 def setChatFile(file, txt):
     system('echo "" > %s' % file)
     system('chmod 755 %s' % file)
@@ -40,8 +44,10 @@ def setChatFile(file, txt):
         f.write(txt)
         f.close()
 
+
 def getUptime():
-    if not fileExists('/proc/uptime'): return ''
+    if not fileExists('/proc/uptime'):
+        return ''
     f = open('/proc/uptime', 'r')
     if f:
         for line in f.readlines():
@@ -50,7 +56,8 @@ def getUptime():
                 f.close()
                 return int(float(tokens[0]))
 
-def StartConnect(autorun = False):
+
+def StartConnect(autorun=False):
     global dialstate
     global logfd
     global autorestartModem
@@ -91,7 +98,8 @@ def StartConnect(autorun = False):
         system('echo "`date` : pppd return = %d" >> /tmp/autorun.log' % ret)
     return ret
 
-def StopConnect(autorun = False):
+
+def StopConnect(autorun=False):
     global connected
     global dialstate
     global starttime
@@ -115,8 +123,10 @@ def StopConnect(autorun = False):
     dialstate = NONE
     starttime = None
 
+
 def isHighResolution():
     return getDesktop(0).size().width() >= 1280 and getDesktop(0).size().height() >= 720
+
 
 from Screens.Screen import Screen
 from __init__ import _
@@ -140,12 +150,13 @@ from re import compile as re_compile, search as re_search
 from Screens.Console import Console as myConsole
 import gettext
 
+
 def setAltDNS():
     if not fileExists('/etc/ppp/resolv.conf.xmodem'):
         return
     system("grep -v '^nameserver' /etc/ppp/resolv.conf.xmodem >/etc/resolv.conf")
-    dns1 = '.'.join([ '%d' % d for d in config.plugins.xModem.dns1.value ])
-    dns2 = '.'.join([ '%d' % d for d in config.plugins.xModem.dns2.value ])
+    dns1 = '.'.join(['%d' % d for d in config.plugins.xModem.dns1.value])
+    dns2 = '.'.join(['%d' % d for d in config.plugins.xModem.dns2.value])
     dns = 'nameserver ' + dns1 + '\nnameserver ' + dns2 + '\n'
     f = open('/etc/resolv.conf', 'r+')
     if f:
@@ -153,9 +164,11 @@ def setAltDNS():
         f.write(dns)
         f.close()
 
+
 def restoreDNS():
     if fileExists('/etc/ppp/resolv.conf.xmodem'):
         system('mv /etc/ppp/resolv.conf.xmodem /etc/resolv.conf')
+
 
 def setOptions():
     if config.plugins.xModem.altdns.value:
@@ -232,7 +245,8 @@ def setOptions():
         options += 'disconnect /etc/ppp/disconnect.chat.xmodem\n'
     return options
 
-def setChats(init = True):
+
+def setChats(init=True):
     if init:
         chatstr = '#!/bin/sh\n\nif [ $# -lt 1 ]; then\n\techo "$0: no phone number given." >&2\n\texit -1\nfi\n\nPHONENUM=$1\n\nchat -v -e \\\n'
     else:
@@ -272,6 +286,7 @@ def setChats(init = True):
     else:
         chatstr += '\\d\\d+\\p+\\p+\\c" "" "\\d\\dATH"\n'
     return chatstr
+
 
 def doConnect():
     global gateway
@@ -320,6 +335,7 @@ def doConnect():
         system('rm -f /etc/ppp/resolv.conf.xmodem')
         system('cp /etc/resolv.conf /etc/ppp/resolv.conf.xmodem')
 
+
 def loadModemModules():
     vendor = config.plugins.xModem.gprs.vendid.value
     product = config.plugins.xModem.gprs.prodid.value
@@ -339,7 +355,8 @@ def loadModemModules():
         system('usb_modeswitch %s' % zerocdargs)
     if vendor and product:
         modules[0] += ' vendor=0x%s product=0x%s' % (vendor, product)
-    system('modprobe %s' %  modules[0])
+    system('modprobe %s' % modules[0])
+
 
 def pppdClosed(ret):
     global logfd
@@ -366,14 +383,17 @@ def pppdClosed(ret):
         logfd.close()
         logfd = -1
 
-def curtime2str(format = '%Y/%m/%d %H:%M:%S', msec = True):
+
+def curtime2str(format='%Y/%m/%d %H:%M:%S', msec=True):
     curtime = getTime()
     ms = ''
     if msec == True:
         ms = '.%03d' % ((curtime - int(curtime)) * 1000)
     return strftime(format, localtime(curtime)) + ms
 
+
 waitCR = False
+
 
 def writeLog(text):
     global waitCR
@@ -414,6 +434,7 @@ def writeLog(text):
             len(logstr) > 0 and logfd.write(logstr)
             logfd.flush()
             waitCR = logstr[len(logstr) - 1] != '\n'
+
 
 def dataAvail(text):
     global dialstate
@@ -468,14 +489,14 @@ config.plugins.xModem.restart_softcam = ConfigYesNo(default=False)
 config.plugins.xModem.show_message = ConfigYesNo(default=False)
 config.plugins.xModem.restart_softcam_preview = ConfigNothing()
 
-config.plugins.xModem.autorestart_modem = ConfigSelection(default = "0", choices = [("0", _("disabled")) , ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")),("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
-choices_list =[]
-huawei_list = [("AT^U2DIAG=0", _("Huawei AT^U2DIAG=0 (only modem mode)")),("AT^U2DIAG=1", _("Huawei AT^U2DIAG=1 (modem and CD-Rom mode)")),("AT^U2DIAG=255", _("Huawei AT^U2DIAG=255 (Modem+CD-Rom+Card-Reader Modem+ Factory Defaults)")), ("AT^U2DIAG=256", _("Huawei AT^U2DIAG=256 (Modem+Card-Reader Mode)")), ("AT^U2DIAG=257", _("Huawei AT^U2DIAG=257 (Disable Application Port)")), ("AT^U2DIAG=276", _("Huawei AT^U2DIAG=276 (Reset to factory Defaults)")), ("AT^U2DIAG=119", _("Huawei AT^U2DIAG=119 (return to HiLink mode)")), ("AT^SYSCFG=13,1,3fffffff,0,0", _("Huawei AT^SYSCFG=13,1,3fffffff,0,0 (only 2G mode)")), ("AT^SYSCFG=2,1,3fffffff,0,0", _("Huawei AT^SYSCFG=2,1,3fffffff,0,0 (preference 2G mode)")), ("AT^SYSCFG=14,2,3fffffff,0,1 ", _("Huawei  AT^SYSCFG=14,2,3fffffff,0,1 (only 3G mode)")),("AT^SYSCFG=2,2,3fffffff,0,1", _("Huawei AT^SYSCFG=2,2,3fffffff,0,1 (preference 3G mode)")), ("AT^SYSCFG=2,2,3fffff ff,0,2", _("Huawei AT^SYSCFG=2,2,3fffff ff,0,2 (enable mode 2G and 3G)")), ("AT^SYSCFG=13,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=13,1,3FFFFFFF,2,4 (only mode GPRS/EDGE)")), ("AT^SYSCFG=14,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=14,2,3FFFFFFF,2,4 (only mode 3G/WCDMA)")), ("AT^SYSCFG=2,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,1,3FFFFFFF,2,4 (preference mode GPRS/EDGE)")), ("AT^SYSCFG=2,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,2,3FFFFFFF,2,4 (preference mode 3G/WCDMA)"))]
+config.plugins.xModem.autorestart_modem = ConfigSelection(default="0", choices=[("0", _("disabled")), ("15", _("15 min")), ("30", _("30 min")), ("60", _("1 hour")), ("120", _("2 hours")), ("240", _("4 hours")), ("720", _("12 hours")), ("1440", _("24 hours")), ("2880", _("48 hours"))])
+choices_list = []
+huawei_list = [("AT^U2DIAG=0", _("Huawei AT^U2DIAG=0 (only modem mode)")), ("AT^U2DIAG=1", _("Huawei AT^U2DIAG=1 (modem and CD-Rom mode)")), ("AT^U2DIAG=255", _("Huawei AT^U2DIAG=255 (Modem+CD-Rom+Card-Reader Modem+ Factory Defaults)")), ("AT^U2DIAG=256", _("Huawei AT^U2DIAG=256 (Modem+Card-Reader Mode)")), ("AT^U2DIAG=257", _("Huawei AT^U2DIAG=257 (Disable Application Port)")), ("AT^U2DIAG=276", _("Huawei AT^U2DIAG=276 (Reset to factory Defaults)")), ("AT^U2DIAG=119", _("Huawei AT^U2DIAG=119 (return to HiLink mode)")), ("AT^SYSCFG=13,1,3fffffff,0,0", _("Huawei AT^SYSCFG=13,1,3fffffff,0,0 (only 2G mode)")), ("AT^SYSCFG=2,1,3fffffff,0,0", _("Huawei AT^SYSCFG=2,1,3fffffff,0,0 (preference 2G mode)")), ("AT^SYSCFG=14,2,3fffffff,0,1 ", _("Huawei  AT^SYSCFG=14,2,3fffffff,0,1 (only 3G mode)")), ("AT^SYSCFG=2,2,3fffffff,0,1", _("Huawei AT^SYSCFG=2,2,3fffffff,0,1 (preference 3G mode)")), ("AT^SYSCFG=2,2,3fffff ff,0,2", _("Huawei AT^SYSCFG=2,2,3fffff ff,0,2 (enable mode 2G and 3G)")), ("AT^SYSCFG=13,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=13,1,3FFFFFFF,2,4 (only mode GPRS/EDGE)")), ("AT^SYSCFG=14,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=14,2,3FFFFFFF,2,4 (only mode 3G/WCDMA)")), ("AT^SYSCFG=2,1,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,1,3FFFFFFF,2,4 (preference mode GPRS/EDGE)")), ("AT^SYSCFG=2,2,3FFFFFFF,2,4", _("Huawei AT^SYSCFG=2,2,3FFFFFFF,2,4 (preference mode 3G/WCDMA)"))]
 huawei_list_ext = [("AT^HSDPA=1", _("Huawei AT^HSDPA=1 (modem mode HSDPA on)")), ("AT^HSDPA=0", _("Huawei AT^HSDPA=0 (modem mode HSDPA off)")), ("AT^HSUPA=1", _("Huawei AT^HSUPA=1 (modem mode HSUPA on)")), ("AT^HSUPA=0", _("Huawei AT^HSUPA=0 (modem mode HSUPA off)")), ("AT^HSPA=0", _("Huawei AT^HSPA=0 ( mode WCDMA)")), ("AT^HSPA=1", _("Huawei AT^HSPA=1 ( mode HSDPA)")), ("AT^HSPA=2", _("Huawei AT^HSPA=2 (mode HSPA)")), ("AT^HSPA=3", _("Huawei AT^HSPA=3 (mode HSPA+)"))]
 choices_list += huawei_list + huawei_list_ext
-zte_list = [("AT%USBMODEM=0", _("ZTE AT%USBMODEM=0 (only modem mode)")),("AT%USBMODEM=1", _("ZTE AT%USBMODEM=1 (modem and CD-Rom mode)")),("AT+ZSNT=0,0,0", _("ZTE AT+ZSNT=0,0,0 (Network/auto mode)")), ("AT+ZSNT=0,0,1", _("ZTE AT+ZSNT=0,0,1 (auto GSM+WCDMA/preference GSM)")), ("AT+ZSNT=0,0,2", _("ZTE AT+ZSNT=0,0,2 (auto GSM+WCDMA/preference WCDMA)")), ("AT+ZSNT=1,0,0", _("ZTE AT+ZSNT=1,0,0 (auto/only GSM)")), ("AT+ZSNT=2,0,0", _("ZTE AT+ZSNT=2,0,0 (auto/only WCDMA)")), ("AT+ZSNT=0,1,0 ", _("ZTE AT+ZSNT=0,1,0 (manual/GSM+WCDMA)")), ("AT+ZSNT=1,1,0", _("ZTE AT+ZSNT=1,1,0 (manual/only GSM)")), ("AT+ZSNT=2,1,0", _("ZTE AT+ZSNT=2,1,0  (manual/only WCDMA)"))]
+zte_list = [("AT%USBMODEM=0", _("ZTE AT%USBMODEM=0 (only modem mode)")), ("AT%USBMODEM=1", _("ZTE AT%USBMODEM=1 (modem and CD-Rom mode)")), ("AT+ZSNT=0,0,0", _("ZTE AT+ZSNT=0,0,0 (Network/auto mode)")), ("AT+ZSNT=0,0,1", _("ZTE AT+ZSNT=0,0,1 (auto GSM+WCDMA/preference GSM)")), ("AT+ZSNT=0,0,2", _("ZTE AT+ZSNT=0,0,2 (auto GSM+WCDMA/preference WCDMA)")), ("AT+ZSNT=1,0,0", _("ZTE AT+ZSNT=1,0,0 (auto/only GSM)")), ("AT+ZSNT=2,0,0", _("ZTE AT+ZSNT=2,0,0 (auto/only WCDMA)")), ("AT+ZSNT=0,1,0 ", _("ZTE AT+ZSNT=0,1,0 (manual/GSM+WCDMA)")), ("AT+ZSNT=1,1,0", _("ZTE AT+ZSNT=1,1,0 (manual/only GSM)")), ("AT+ZSNT=2,1,0", _("ZTE AT+ZSNT=2,1,0  (manual/only WCDMA)"))]
 choices_list += zte_list
-config.plugins.xModem.examples_commands = NoSave(ConfigSelection(choices = choices_list))
+config.plugins.xModem.examples_commands = NoSave(ConfigSelection(choices=choices_list))
 config.plugins.xModem.standard = ConfigSelection([('0', _('internal modem')),
  ('1', _('GPRS/EDGE/UMTS/HSDPA')),
  ('2', 'CDMA/EVDO'),
@@ -575,6 +596,7 @@ config.plugins.xModem.peer.umsparam = ConfigText('', fixed_size=False)
 
 from autoRestartModemPoller import autoRestartModemPoller
 
+
 class ConnectInfo(Screen):
     skin = """
         <screen position="center,center" size="440,310" title="Connect statistics" >
@@ -608,7 +630,7 @@ class ConnectInfo(Screen):
         <widget name="errorTXval" position="270,280" size="165,18" font="Regular;16" halign="center" transparent="1" />
         </screen>"""
 
-    def __init__(self, session, constarttime = None, iface = 'ppp0'):
+    def __init__(self, session, constarttime=None, iface='ppp0'):
         Screen.__init__(self, session)
         self.starttime = constarttime
         if self.starttime is None:
@@ -719,7 +741,7 @@ class ConnectInfo(Screen):
 
         return servers
 
-    def getStatistics(self, iface = 'ppp0'):
+    def getStatistics(self, iface='ppp0'):
         digitalPattern = re_compile('[0-9]+')
         proclines = []
         try:
@@ -741,7 +763,7 @@ class ConnectInfo(Screen):
                     self['errorTXval'].setText(tokens[10])
                 break
 
-    def strToSize(self, strval = '0'):
+    def strToSize(self, strval='0'):
         ext = ['KB',
          'KB',
          'MB',
@@ -799,7 +821,7 @@ class LogConsole(Screen):
             <widget name="text" position="0,0" size="1080,520" font="Console;16" />
             </screen>"""
 
-    def __init__(self, session, title = 'Log...', logfile = '', lines = 333, scroll = False):
+    def __init__(self, session, title='Log...', logfile='', lines=333, scroll=False):
         self.skin = LogConsole.skin
         Screen.__init__(self, session)
         self['text'] = ScrollLabel('')
@@ -851,11 +873,12 @@ class LogConsole(Screen):
         if self.scroll:
             self['text'].lastPage()
 
+
 class dataConsole(myConsole):
-    def __init__(self, session, title = "execute...", cmdlist = None, finishedCallback = None, closeOnSuccess = False):
+    def __init__(self, session, title="execute...", cmdlist=None, finishedCallback=None, closeOnSuccess=False):
 		myConsole.__init__(self, session, title, cmdlist, finishedCallback, closeOnSuccess)
 		self.skinName = "Console"
-		self["BackupActions"] = ActionMap(["InfobarMenuActions"], 
+		self["BackupActions"] = ActionMap(["InfobarMenuActions"],
 		{
 			"mainMenu": self.stopRun,
 		}, -2)
@@ -868,11 +891,12 @@ class dataConsole(myConsole):
 		self.close()
 		self.container.appClosed.remove(self.runFinished)
 		self.container.dataAvail.remove(self.dataAvail)
- 
+
     def stopRun(self):
 		if not self.stop_run:
 			self.container.sendCtrlC()
 			self.stop_run = True
+
 
 class ModemSetup(ConfigListScreen, Screen):
     if not isHighResolution():
@@ -880,10 +904,10 @@ class ModemSetup(ConfigListScreen, Screen):
             <screen position="center,center" size="560,400" title="xModem" >
             <ePixmap position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
             <ePixmap position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
-            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" /> 
-            <widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
-            <widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
+            <ePixmap position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
+            <ePixmap position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
+            <widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+            <widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;18" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
             <widget name="config" position="25,60" size="520,226" scrollbarMode="showOnDemand" />
@@ -937,7 +961,7 @@ class ModemSetup(ConfigListScreen, Screen):
     def nothing(self):
         pass
 
-    def __init__(self, session, args = None):
+    def __init__(self, session, args=None):
         self.skin = ModemSetup.skin
         self.dot = 0
         self.dots = '........'
@@ -1207,26 +1231,27 @@ class ModemSetup(ConfigListScreen, Screen):
 			if self["config"].getCurrent() is not None:
 				if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
 					from Screens.VirtualKeyBoard import VirtualKeyBoard
-					self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].getValue())
+					self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=self["config"].getCurrent()[0], text=self["config"].getCurrent()[1].getValue())
 
-    def VirtualKeyBoardCallback(self, callback = None):
+    def VirtualKeyBoardCallback(self, callback=None):
 		cur = self["config"].getCurrent()
-		if cur is None: return
+		if cur is None:
+		    return
 		if callback is not None and len(callback):
 			stop = False
 			if cur[1] == config.plugins.xModem.imod.number:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','P','T','W','@'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'P', 'T', 'W', '@'):
 						stop = True
 						break
 			elif cur[1] == config.plugins.xModem.imod.port or cur[1] == config.plugins.xModem.gprs.port or cur[1] == config.plugins.xModem.cdma.port:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','m','s','t','u','v','y','A','B','C','M','S','T','U','/'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'm', 's', 't', 'u', 'v', 'y', 'A', 'B', 'C', 'M', 'S', 'T', 'U', '/'):
 						stop = True
 						break
 			elif cur[1] == config.plugins.xModem.gprs.vendid or cur[1] == config.plugins.xModem.gprs.prodid or cur[1] == config.plugins.xModem.cdma.vendid or cur[1] == config.plugins.xModem.cdma.prodid or cur[1] == config.plugins.xModem.peer.vendid or cur[1] == config.plugins.xModem.peer.prodid:
 				for x in callback:
-					if x not in ('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'):
+					if x not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'):
 						stop = True
 						break
 			if not stop:
@@ -1248,27 +1273,28 @@ class ModemSetup(ConfigListScreen, Screen):
 			if fileExists('/usr/sbin/pppstats')or fileExists('/usr/bin/pppstats'):
 				menu.append((_("Run utility 'pppstats'"), "pppstats"))
 		menu.append((_("About plugin"), "about"))
+
 		def extraAction(choice):
 			if choice:
 				if choice[1] == "apn":
-					self.session.open(myConsole,_("Show APN list"),["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/apnlist"])
+					self.session.open(myConsole, _("Show APN list"), ["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/apnlist"])
 				elif choice[1] == "lsusb":
-					self.session.open(myConsole,_("Run command 'lsusb'"),["lsusb"])
+					self.session.open(myConsole, _("Run command 'lsusb'"), ["lsusb"])
 				elif choice[1] == "dmesg":
-					self.session.open(myConsole,_("Run command 'dmesg'"),["dmesg"])
+					self.session.open(myConsole, _("Run command 'dmesg'"), ["dmesg"])
 				elif choice[1] == "usb_modeswitch":
-					self.session.open(myConsole,_("usb_modeswitch --help"),["usb_modeswitch --help && cat /etc/list_modem.txt"])
+					self.session.open(myConsole, _("usb_modeswitch --help"), ["usb_modeswitch --help && cat /etc/list_modem.txt"])
 				elif choice[1] == "drivers":
 					self.install()
 				elif choice[1] == "ussd":
 					from requestUSSD import requestUSSDsetup
 					self.session.open(requestUSSDsetup)
 				elif choice[1] == "picocom":
-					self.session.open(dataConsole,_("Instruction for utility 'picocom'"),["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/picocomlist && picocom -h"])
+					self.session.open(dataConsole, _("Instruction for utility 'picocom'"), ["cat /usr/lib/enigma2/python/Plugins/Extensions/xModem/picocomlist && picocom -h"])
 				elif choice[1] == "pppstats":
-					self.session.open(dataConsole,_("Run utility 'pppstats'"),["pppstats -w1"])
+					self.session.open(dataConsole, _("Run utility 'pppstats'"), ["pppstats -w1"])
 				elif choice[1] == "about":
-					self.session.open( MessageBox, _("Plugin version: %s\n\n") % plugin_version + _("Original developer and author code (2010):\nvlamo\nFurther development (2012-2015):\nDimitrij\n"), MessageBox.TYPE_INFO)
+					self.session.open(MessageBox, _("Plugin version: %s\n\n") % plugin_version + _("Original developer and author code (2010):\nvlamo\nFurther development (2012-2015):\nDimitrij\n"), MessageBox.TYPE_INFO)
 		dlg = self.session.openWithCallback(extraAction, ChoiceBox, title=text, list=menu)
 		dlg.setTitle(_("Extra menu"))
 
@@ -1320,14 +1346,14 @@ class ModemSetup(ConfigListScreen, Screen):
 
     def install(self):
         if self.green_function == CONNECT:
-            mbox = self.session.openWithCallback(self.installConfirmed, MessageBox, _("Do you really want to install the driver from the internet?"), MessageBox.TYPE_YESNO, default = False)
+            mbox = self.session.openWithCallback(self.installConfirmed, MessageBox, _("Do you really want to install the driver from the internet?"), MessageBox.TYPE_YESNO, default=False)
             mbox.setTitle(_("Install drivers for PPP"))
 
     def installConfirmed(self, answer):
         if answer:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xModem/ppp_loader.sh'):
                 system('chmod 755 /usr/lib/enigma2/python/Plugins/Extensions/xModem/ppp_loader.sh')
-                self.session.open(myConsole, title = _("Please wait, install drivers..."), cmdlist = ["sh '/usr/lib/enigma2/python/Plugins/Extensions/xModem/ppp_loader.sh'"])
+                self.session.open(myConsole, title=_("Please wait, install drivers..."), cmdlist=["sh '/usr/lib/enigma2/python/Plugins/Extensions/xModem/ppp_loader.sh'"])
 
     def showInfo(self):
         if self.red_function == DISCONNECT:
@@ -1394,6 +1420,7 @@ class ModemSetup(ConfigListScreen, Screen):
 		if self.green_function == CONNECT:
 			text = _("Set AT-command as:")
 			menu = [(_("Init string"), "init"), (_("Deinit string"), "deinit")]
+
 			def extraAction(choice):
 				if choice:
 					if choice[1] == "init":
@@ -1410,7 +1437,7 @@ class ModemSetup(ConfigListScreen, Screen):
 			dlg = self.session.openWithCallback(extraAction, ChoiceBox, title=text, list=menu)
 			dlg.setTitle(_("AT-commands"))
 
-    def keyOK(self, answer = None):
+    def keyOK(self, answer=None):
 		if self.green_function == CONNECT and self["config"].getCurrent() is not None and self["config"].getCurrent()[1] == config.plugins.xModem.examples_commands:
 			self.setExamplesCommands()
 			return
@@ -1489,7 +1516,7 @@ class ModemSetup(ConfigListScreen, Screen):
 			elif fileExists("/etc/ppp/ip-up.d/10emurestart"):
 				system("rm -rf /etc/ppp/ip-up.d/10emurestart")
 
-    def keyExit(self, answer = None):
+    def keyExit(self, answer=None):
 		if answer is None:
 			if self["config"].isChanged():
 				self.session.openWithCallback(self.keyExit, MessageBox, _("Really close without saving settings?"))
@@ -1620,6 +1647,7 @@ class ModemSetup(ConfigListScreen, Screen):
         self['config'].instance.setSelectionEnable(focus_enabled)
         self['ListActions'].setEnabled(not focus_enabled)
 
+
 def autostart(reason, **kwargs):
 	if reason == 0:
 		global run_autostart
@@ -1628,13 +1656,16 @@ def autostart(reason, **kwargs):
 	elif reason == 1:
 		StopConnect(True)
 
+
 def main(session, **kwargs):
 	session.open(ModemSetup)
+
 
 def menu(menuid, **kwargs):
 	if menuid == "mainmenu" and config.plugins.xModem.mainmenu.value:
 		return [(_("xModem"), main, "x_modem", 45)]
 	return []
+
 
 def Plugins(**kwargs):
 	if config.plugins.xModem.extmenu.value:
@@ -1643,4 +1674,4 @@ def Plugins(**kwargs):
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon='xmodem.png', fnc=main),
 			PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MENU, fnc=menu)]
 	else:
-		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main),PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu) ]
+		return [PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=autostart), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='xmodem.png', fnc=main), PluginDescriptor(name=_('xModem'), description=_('plugin to connect to internet'), where=PluginDescriptor.WHERE_MAINMENU, fnc=menu)]

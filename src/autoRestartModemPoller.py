@@ -7,8 +7,10 @@ import Screens.InfoBar
 import Screens.Standby
 from Tools import Notifications
 
+
 class autoRestartModemPoller:
 	"""Automatically restarting xModem"""
+
 	def __init__(self):
 		self.timer = eTimer()
 		self.wait_timer = eTimer()
@@ -38,7 +40,7 @@ class autoRestartModemPoller:
 		if config.plugins.xModem.autorestart_modem.value != "0":
 			notify = config.plugins.xModem.show_message.value and not Screens.Standby.inStandby and Screens.InfoBar.InfoBar.instance and Screens.InfoBar.InfoBar.instance.execing
 			if notify:
-				Notifications.AddPopup(text = _("Forced auto restarting modem!\nPlease wait..."), type = MessageBox.TYPE_INFO, timeout = 15)
+				Notifications.AddPopup(text=_("Forced auto restarting modem!\nPlease wait..."), type=MessageBox.TYPE_INFO, timeout=15)
 			StopConnect(True)
 			conn.sendCtrlC()
 			print "[autoRestartModemPoller] stop modem"
@@ -59,7 +61,6 @@ class autoRestartModemPoller:
 			else:
 				notify = config.plugins.xModem.show_message.value and not Screens.Standby.inStandby and Screens.InfoBar.InfoBar.instance and Screens.InfoBar.InfoBar.instance.execing
 				if notify:
-					Notifications.AddPopup(text = _("Failed start modem!\nPlease run modem manually..."), type = MessageBox.TYPE_INFO, timeout = 10)
+					Notifications.AddPopup(text=_("Failed start modem!\nPlease run modem manually..."), type=MessageBox.TYPE_INFO, timeout=10)
 				print "[autoRestartModemPoller] failed start modem"
 				#StopConnect()
-
