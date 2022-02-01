@@ -116,16 +116,16 @@ class requestUSSDsetup(Screen, ConfigListScreen):
 
 	def write2p(self, a):
 		self.p.write(a + '\r\n')
-		print 'Waiting answer...'
+		print('Waiting answer...')
 		self['status'].setText('Waiting answer...')
 		l = self.p.readline()
 		self.p.close()
 		if l:
 			for l in self.p:
-				print l
+				print(l)
 				if l.startswith('+CUSD'):
 					answer = base64.b16decode(l[10:l.rfind('"')]).decode('utf-16-be')
-					print answer
+					print(answer)
 					self['status'].setText(answer)
 					break
 

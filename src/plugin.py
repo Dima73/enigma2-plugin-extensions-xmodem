@@ -67,9 +67,9 @@ def StartConnect(autorun=False):
     if autorun == True and config.plugins.xModem.autorun.value == False:
         return -1
     if autorun:
-        print '[xModem] starting autorun pppd'
+        print('[xModem] starting autorun pppd')
         system('echo "`date` : start execute pppd" >> /tmp/autorun.log')
-    print '[xModem] start execute pppd'
+    print('[xModem] start execute pppd')
     doConnect()
     dialstate = DIALING
     if config.plugins.xModem.standard.value == '3':
@@ -80,7 +80,7 @@ def StartConnect(autorun=False):
         setChatFile('/etc/ppp/disconnect.chat.xmodem', setChats(False))
         ret = conn.execute('pppd', 'pppd', '-d', '-detach', 'file', '/etc/ppp/options.xmodem')
     if ret:
-        print '[xModem] execute pppd failed!'
+        print('[xModem] execute pppd failed!')
         dialstate = NONE
         if autorun:
             pppdClosed(ret)
@@ -105,10 +105,10 @@ def StopConnect(autorun=False):
     global starttime
     if connected:
         if autorun:
-            print '[xModem] stopping autorun pppd'
+            print('[xModem] stopping autorun pppd')
             conn.dataAvail.append(dataAvail)
         else:
-            print '[xModem] stop execute pppd'
+            print('[xModem] stop execute pppd')
         system('killall -INT pppd')
         cnt = 0
         while fileExists('/var/run/ppp0.pid'):
@@ -362,7 +362,7 @@ def pppdClosed(ret):
     global logfd
     if autorestartModem:
         autorestartModem.timer.stop()
-    print '[xModem] modem disconnected', ret
+    print('[xModem] modem disconnected', ret)
     if gateway:
         system('route add default gw %d.%d.%d.%d' % (gateway & 255,
          gateway >> 8 & 255,
@@ -727,7 +727,7 @@ class ConnectInfo(Screen):
             resolv = fp.readlines()
             fp.close()
         except:
-            print '[xModem] resolv.conf - opening failed'
+            print('[xModem] resolv.conf - opening failed')
 
         servers = ''
         for line in resolv:
@@ -749,7 +749,7 @@ class ConnectInfo(Screen):
             proclines = fp.readlines()
             fp.close()
         except:
-            print '[xModem] /proc/net/dev - opening failed'
+            print('[xModem] /proc/net/dev - opening failed')
 
         for line in proclines:
             if line.find(iface) != -1:
